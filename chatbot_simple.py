@@ -154,4 +154,41 @@ class SimpleLLMChatbot:
 
 • "How many invoices are due in the next 7 days?"
 • "What is the total value of the invoice from Amazon?"
-• "Lis
+• "List all vendors with invoices above $2,000"
+• "Show me all invoices"
+• "Which vendor has the highest invoice?"
+• "What is Amazon's invoice number?"
+
+Type 'quit', 'exit', or 'bye' to exit."""
+    
+    def run(self):
+        """Run the chatbot CLI."""
+        print("🤖 Invoice Chatbot (with Local AI)")
+        print("=" * 50)
+        
+        if self.qa_pipeline:
+            print("✅ Local Q&A model loaded - I can understand natural language!")
+        else:
+            print("⚠️ Local AI model not available - using rule-based responses only")
+        
+        print("Ask me about your invoices! Type 'help' for examples.\n")
+        
+        while self.running:
+            try:
+                query = input("You: ").strip()
+                if not query:
+                    continue
+                
+                response = self.process_query(query)
+                print(f"Bot: {response}\n")
+                
+            except KeyboardInterrupt:
+                print("\n\nGoodbye! Thanks for using the Invoice Chatbot.")
+                break
+            except Exception as e:
+                print(f"Bot: Sorry, I encountered an error: {e}\n")
+
+
+if __name__ == "__main__":
+    chatbot = SimpleLLMChatbot()
+    chatbot.run()
